@@ -870,6 +870,8 @@ class Airflow(AirflowBaseView):
                 {"name": name, "selected": bool(arg_tags_filter and name in arg_tags_filter)}
                 for name, in dagtags
             ]
+            
+            tags = sorted(tags, key=lambda t: t['name'])
 
             owner_links_dict = DagOwnerAttributes.get_all(session)
 

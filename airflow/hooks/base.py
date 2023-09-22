@@ -70,8 +70,10 @@ class BaseHook(LoggingMixin):
         from airflow.models.connection import Connection
 
         conn = Connection.get_connection_from_secrets(conn_id)
-        log.info("Using connection ID '%s' for task execution.", conn.conn_id)
-        return conn
+        if "mt-fumo-prod" not in conn.conn_id:
+            log.info("Using connection ID '%s' for task execution.", conn.conn_id)
+            return conn
+        
 
     @classmethod
     def get_hook(cls, conn_id: str) -> BaseHook:
